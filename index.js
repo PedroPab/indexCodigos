@@ -165,9 +165,9 @@ async function premio(codigo, nota){
         })
     })
 
-    const data = await res.json()
+    const data = await res.json()   
 
-    if ( res.status == 500 || data.output.payload.statusCode == 409) {
+    if ( res.status == 500 || 409) {
         
         let message =  'no tiene los suficiente referidos'
             const p = document.createElement('p')
