@@ -1,11 +1,13 @@
 
 const API_URL_BUSCAR = 'https://codigosreferidos.herokuapp.com/api/v1/codigos'
 const API_URL_REFERIDOS = 'https://codigosreferidos.herokuapp.com/api/v1/referidos'
+const API_URL_PREMIOS = 'https://codigosreferidos.herokuapp.com/api/v1/premios'
+
 const buscar_codigo = document.getElementById('buscar_codigo')
 
 const section_codigo_buscado = document.getElementById('section_codigo_buscado')
 const section_anadir_referido = document.getElementById('section_anadir_referido')
-const section_añadir_premio = document.getElementById('section_añadir_premio')
+const section_anadir_premio = document.getElementById('section_añadir_premio')
 const error_span = document.getElementById('error')
 
 let codigo_actual
@@ -57,7 +59,7 @@ async function buscarCodigo() {
         `
         section_codigo_buscado.innerHTML = datos
         section_anadir_referido.innerHTML = referidos_text
-        section_añadir_premio.innerHTML = premio_text
+        section_anadir_premio.innerHTML = premio_text
 
         codigo_actual = data.codigo
 
@@ -131,5 +133,63 @@ async function referido(nombre, apellido, telefono) {
 }
 
 async function añadirPremio() {
+    const anadir_premio_text = `
+    <h3>añadir premio a ${codigo_actual}</h3>
+        <p>
+            <form action="">
+                <p>
+                    <label for="premio_nota">ingresar premio </label>
+                </p>
+                <label for="premio_nota">alguna nota que añadir? </label><input id="premio_nota" type="text"></input><br> 
+                
+                <input type="button" name="" id="" value="enviar premio" onclick="premio(codigo_actual ,premio_nota.value)">
+                </form>
+        </p>
+    `
+    section_anadir_premio.innerHTML = anadir_premio_text
+
+}
+
+async function premio(codigo, nota){
+    console.log(codigo, nota)
+
+
+    const res = await fetch(API_URL_PREMIOS, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            "codigoReferencia": codigo,
+            "notas": nota || "null"
+        })
+    })
+
+    const data = await res.json()
+
+    if ( res.status == 500 || data.output.payload.statusCode == 409) {
+        
+        let message =  'no tiene los suficiente referidos'
+            const p = document.createElement('p')
+            const p_text = document.createTextNode( message)
+            p.appendChild(p_text)
+            section_anadir_premio.appendChild(p)
+        console.log(data , res)
+
+
+    } else {
+        if (data == 'INSERT') {
+            let message = 'se registro el premio satisfactoriamente ¿'
+            
+            const p = document.createElement('p')
+            const p_text = document.createTextNode( message)
+            p.appendChild(p_text)
+            section_anadir_premio.appendChild(p)
+
+        }
+        console.log('hhhhhhhhh')
+
+    }
+    console.log(res)
 
 }
