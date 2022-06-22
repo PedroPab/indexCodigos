@@ -10,25 +10,25 @@ const error_span = document.getElementById('error')
 
 let codigo_actual
 
-async function buscarCodigo(){
+async function buscarCodigo() {
     section_codigo_buscado.innerHTML = ''
     section_anadir_referido.innerHTML = ''
 
     const res = await fetch(API_URL_BUSCAR + "/" + String(buscar_codigo.value))
     const data = await res.json()
 
-    
-    
 
-    if(res.status !== 200){
+
+
+    if (res.status !== 200) {
         const h3 = document.createElement('h3')
         const h3_text = document.createTextNode(`error: ${res.status} probablemente no hay ese codigo`)
         h3.appendChild(h3_text)
         section_codigo_buscado.appendChild(h3)
-    
-    }else{
+
+    } else {
         let datos = 0
-        if(data.lastName){
+        if (data.lastName) {
 
             datos = `
             <h1>Codigo ${data.codigo}</h1>
@@ -38,8 +38,8 @@ async function buscarCodigo(){
             <p>Premio pendiente?: ${data.premio_pendiente}</p>
 
         `
-        }else{
-                datos = `
+        } else {
+            datos = `
             <h1>Codigo ${data.codigo}</h1>
             
             <p>nombre: ${data.name} </p>
@@ -47,8 +47,8 @@ async function buscarCodigo(){
             <p>Premio pendiente?: ${data.premio_pendiente}</p>
         `
         }
-        
-        
+
+
         const referidos_text = `
         <input type="button" onclick="añadirReferido()" value="añadir referido"></input>
         `
@@ -58,17 +58,17 @@ async function buscarCodigo(){
         section_codigo_buscado.innerHTML = datos
         section_anadir_referido.innerHTML = referidos_text
         section_añadir_premio.innerHTML = premio_text
-        
+
         codigo_actual = data.codigo
 
         console.log(data)
     }
 
 
-    
+
 }
 
-async function añadirReferido(){
+async function añadirReferido() {
     const anadir_referido_text = `
     <h3>añadir referido a ${codigo_actual}</h3>
         <p>
@@ -84,17 +84,17 @@ async function añadirReferido(){
         </p>
     `
     section_anadir_referido.innerHTML = anadir_referido_text
-    
+
 
 }
-async function referido(nombre, apellido, telefono){
+async function referido(nombre, apellido, telefono) {
     console.log(nombre, apellido, telefono)
 
 
     const res = await fetch(API_URL_REFERIDOS, {
         method: 'POST',
         headers: {
-           'Content-Type': 'application/json'
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify({
             "codigoReferencia": codigo_actual,
@@ -102,25 +102,34 @@ async function referido(nombre, apellido, telefono){
             "telephone": telefono
         })
     })
-    
+
     const data = await res.json()
 
-    if(res.status !== 201){
-        error_span.innerHTML = 'error: ' + res.status + data.message
-    }else{
-        if(data){
+    if (res.status !== 201) {
+
+        console.log('error: ' + res.status + data.message)
+
+        if (data.message.includes('duplicate key')) {
+            const p = document.createElement('p')
+            const p_text = document.createTextNode('error: el telefono ya esta registrado ')
+            p.appendChild(p_text)
+            section_anadir_referido.appendChild(p)
+        }
+
+    } else {
+        if (data) {
             let message = ""
-            if(data[1] == "ya se merece un premio") message = 'ya se merece un premio'
+            if (data[1] == "ya se merece un premio") message = 'ya se merece un premio'
             const p = document.createElement('p')
             const p_text = document.createTextNode('se registro satisfactoriamente el nuevo referido : ) ' + message)
             p.appendChild(p_text)
             section_anadir_referido.appendChild(p)
         }
-        
+
     }
 
 }
 
-async function añadirPremio(){
+async function añadirPremio() {
 
 }
