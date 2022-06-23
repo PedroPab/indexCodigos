@@ -80,7 +80,7 @@ async function añadirReferido() {
                 </p>
                 <label for="referidos_nombre">nombre </label><input id="referidos_nombre" type="text"></input><br> 
                 <label for="referidos_apellido">apellido </label><input id="referidos_apellido" type="text"></input><br> 
-                <label for="referidos_telephone">telefono </label><input id="referidos_telephone" type="text"></input><br> 
+                <label for="referidos_telephone">telefono </label><input id="referidos_telephone" type="number"></input><br> 
                 <input type="button" name="" id="" value="enviar referido" onclick="referido(referidos_nombre.value, referidos_apellido.value, referidos_telephone.value)">
                 </form>
         </p>
@@ -101,7 +101,7 @@ async function referido(nombre, apellido, telefono) {
         body: JSON.stringify({
             "codigoReferencia": codigo_actual,
             "name": nombre,
-            "telephone": telefono
+            "telephone": String(telefono) 
         })
     })
 
