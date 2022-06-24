@@ -52,6 +52,7 @@ async function buscarCodigo() {
 
 
         const referidos_text = `
+        <input type="button" onclick="verReferidos()" value="ver referidos"></input><br>
         <input type="button" onclick="añadirReferido()" value="añadir referido"></input>
         `
         const premio_text = `
@@ -192,4 +193,32 @@ async function premio(codigo, nota){
     }
     console.log(res)
 
+}
+
+async function verReferidos(){
+    const section_buscar_codigo = document.getElementById('section_buscar_codigo')
+    section_buscar_codigo.innerHTML = '...cargando'
+
+    const res = await fetch(API_URL_REFERIDOS + "/" + String(codigo_actual))
+    const data = await res.json()
+
+    console.log(data, res)
+
+    if(res.status == 200){
+        let text = `
+            estos son los referidos de ${codigo_actual}
+        `
+        data.forEach(element => {
+           text += `
+            <br>
+            <p>${element.name}</p>
+           ` 
+           console.log(element)
+        });
+        section_buscar_codigo.innerHTML = text
+    }
+
+
+
+    console.log('hola')
 }
