@@ -20,7 +20,7 @@ const boton_referidos = document.getElementById('boton_referidos')
 window.onload = buscarCodigo(codigo_actual[codigo_actual.length - 1])
 
 boton_premio.addEventListener('click' , (event)=> {
-    location.href = "./../js/añadirPremio.js";
+    location.href = "./../html/añadirPremio.html";
 })
 
 boton_referidos.addEventListener('click', (event)=>{

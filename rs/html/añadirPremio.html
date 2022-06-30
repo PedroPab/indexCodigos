@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Añadir premio</title>
+</head>
+<body>
+    <section><nav><a href="./home.html">home</a></nav></section>
+    <section>
+        <h1 id="h1_premio">añadir premio a </h1>
+        
+            <form action="">
+                <p>
+                    <label for="premio_nota">ingresar premio </label>
+                </p>
+                <label for="premio_nota">alguna nota que añadir? </label><input id="premio_nota" type="text"></input><br> 
+                
+                <input type="button" name="" id="boton_premio" value="enviar premio" onclick="premio(codigo_actual ,premio_nota.value)">
+                </form>
+        
+    </section>
+    <section>
+        <span id="span_mensage"></span>
+        <span id="span_error"></span>
+    </section>
+    <script src="./../js/añadirPremio.js"></script>
+</body>
+</html>

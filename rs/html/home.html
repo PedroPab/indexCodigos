@@ -7,6 +7,7 @@
     <title>Codigos</title>
   </head>
   <body>
+    <section><nav><a href="./crearCodigo.html">Crear codigos</a></nav></section>
     <section class="home">
       <h1>Codigo</h1>
       <form action="">
@@ -15,8 +16,8 @@
           type="number"
           name="buscar codigo"
           id="codigo_input"
-          value="1000"
-          placeholder="codigo..."
+          value=""
+          placeholder="codigo... 1000"
         />
         <br />
         <input
@@ -29,6 +30,8 @@
     <section id="mensage"></section>
 
     <script>
+      //borramos las coockis
+      document.cookie = 'codigo_buscado = ;expires=Fri, 31 Dec 9999 23:59:59 GMT'
       const API_URL_BUSCAR =
         "https://codigosreferidos.herokuapp.com/api/v1/codigos";
 
