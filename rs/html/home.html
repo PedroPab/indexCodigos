@@ -49,7 +49,7 @@
         const codigo_buscado = await buscarCodigo(codigo.value)
         if(codigo_buscado){
             document.cookie = `codigo_buscado = ${codigo.value}`;
-        location.href = "./../html/codigoBuscado.html";
+            location.href = "./../html/codigoBuscado.html";
         }else{
             const mensage = document.getElementById('mensage')
             mensage.innerHTML = 'el codigo  que buscas no se encuentra'
