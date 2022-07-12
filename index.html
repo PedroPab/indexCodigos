@@ -1,64 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Codigos</title>
-  </head>
-  <body>
-    <section><nav><a href="./rs/html/crearCodigo.html">Crear codigos</a></nav></section>
-    <section class="home">
-      <h1>Codigo</h1>
-      <form action="">
-        <label for="codigo_input"></label>
-        <input
-          type="number"
-          name="buscar codigo"
-          id="codigo_input"
-          value=""
-          placeholder="codigo... 1000"
-        />
-        <br />
-        <input
-          type="button"
-          value="buscar"
-          onclick="abrirCodigo(codigo_input)"
-        />
-      </form>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Codigos de referidos</title>
+</head>
+<body>
+    <h1>Codigos de referidos</h1>
+    <span id="error"></span>
+    <section id="section_buscar_codigo">
+        <h2>Bucador de codigo</h2>
+        <p>
+            <form action="">
+                <p><label for="buscar_codigo">Ingresa el codigo de referidos</label></p>
+                <input id="buscar_codigo" value="1000" type="number">
+                <input id="boton_buscar_codigo" onclick="buscarCodigo()" type="button" value="buscar"></input>
+            </form>
+            <section id="section_codigo_buscado"></section>
+        </p>
+
+        <section id="section_anadir_referido"></section>
+
+        <section id="section_añadir_premio"></section>
     </section>
-    <section id="mensage"></section>
 
-    <script>
-      //borramos las coockis
-      document.cookie = 'codigo_buscado = ;expires=Fri, 31 Dec 9999 23:59:59 GMT'
-      const API_URL_BUSCAR =
-        "https://codigosreferidos.herokuapp.com/api/v1/codigos";
-
-      async function buscarCodigo(codigo) {
+    <section>
         
+        <a href="rs/html/crearCodigo.html"><h2>crear codigo</h2></a>
 
-        const res = await fetch(API_URL_BUSCAR + "/" + String(codigo));
-        const data = await res.json();
+    </section>
+    
 
-        if (res.status !== 200) {
-          return false;
-        } else {
-          return true;
-        }
-      }
-
-      async function abrirCodigo(codigo) {
-        const codigo_buscado = await buscarCodigo(codigo.value)
-        if(codigo_buscado){
-            document.cookie = `codigo_buscado = ${codigo.value}`;
-            location.href = "./rs/html/codigoBuscado.html";
-        }else{
-            const mensage = document.getElementById('mensage')
-            mensage.innerHTML = 'el codigo  que buscas no se encuentra'
-        }
-        
-      }
-    </script>
-  </body>
+    <script src="index.js"></script>
+</body>
 </html>
